@@ -1,0 +1,16 @@
+// Creating the file with empty configuration
+{
+  "configurations": [
+    {
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "name": "nodemon",
+      "program": "${workspaceFolder}/app.js",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "nodemon",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    }
+  ]
+}
