@@ -22,7 +22,7 @@ npm i
 
 3. Setup your own mongo DB, e.g. through [following these instructions.](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose#setting_up_the_mongodb_database)
 
-4. Create a .env file in the root of your project. Put there the link of your mongoDB. If you instructions from point 3, you can get the link from point 10 - 12. The entry should have the following format.
+4. Create a .env file in the root of your project. Put there the link of your mongoDB. If you followed instructions from point 3, you can get the link from point 10 - 12. The entry should have the following format.
 
 ```
 MONGODB_URI='mongodb+srv://<username>:<password>@cluster0.l45nfrv.mongodb.net/?retryWrites=true&w=majority'
