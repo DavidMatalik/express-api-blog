@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-const { createNewToken } = require('../controllers/tokenController')
+const tokenController = require('../controllers/tokenController')
 
-router.post('/', createNewToken)
+router.post('/', tokenController.createNewToken)
 
 module.exports = router
