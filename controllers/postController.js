@@ -1,6 +1,7 @@
 const Post = require('../models/post')
 const { body, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
+const { verifyToken } = require('../utils/authentication')
 
 exports.getAllPosts = (req, res, next) => {
   Post.find().exec((err, listPosts) => {
@@ -57,25 +58,17 @@ exports.createNewPost = [
   },
 ]
 
-exports.deletePost = (req, res, next) => {
-  Post.findByIdAndDelete(req.params.postid, (err) => {
-    if (err) {
-      return next(err)
-    }
-    res.send(`Deleted post with id ${req.params.postid}`)
-  })
-}
-
-const verifyToken = (req, res, next) => {
-  const bearerHeader = req.headers['authorization']
-  if (typeof bearerHeader !== 'undefined') {
-    const token = bearerHeader.split(' ')[1]
-    req.token = token
-    next()
-  } else {
-    res.sendStatus(403)
-  }
-}
+exports.deletePost = [
+  verifyToken,
+  (req, res, next) => {
+    Post.findByIdAndDelete(req.params.postid, (err) => {
+      if (err) {
+        return next(err)
+      }
+      res.send(`Deleted post with id ${req.params.postid}`)
+    })
+  },
+]
 
 const executeUpdatePost = (req, res, next) => {
   const errors = validationResult(req)
