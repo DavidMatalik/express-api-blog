@@ -1,6 +1,7 @@
 const Comment = require('../models/comment')
 const { body, validationResult } = require('express-validator')
 const Post = require('../models/post')
+const { verifyToken } = require('../utils/authentication')
 
 exports.getAllComments = (req, res, next) => {
   Comment.find({ post: req.params.postid }).exec((err, listComments) => {
@@ -72,11 +73,8 @@ exports.createNewComment = [
   },
 ]
 
-// Validate the user input
-// Check that the post exists
-// Get the comment with the right id
-// Update the comment
 exports.updateComment = [
+  verifyToken,
   body('text', 'Text must have at least 10 characters.')
     .trim()
     .isLength({ min: 10 })
@@ -132,17 +130,18 @@ exports.updateComment = [
 ]
 
 exports.deleteComment = (req, res, next) => {
-  Comment.findByIdAndDelete(req.params.commentid, (err, comment) => {
-    if (err) {
-      return next(err)
-    }
+  verifyToken,
+    Comment.findByIdAndDelete(req.params.commentid, (err, comment) => {
+      if (err) {
+        return next(err)
+      }
 
-    if (comment == null) {
-      res.status(404).send({
-        message: 'Comment not found',
-      })
-    }
+      if (comment == null) {
+        res.status(404).send({
+          message: 'Comment not found',
+        })
+      }
 
-    res.send(`Deleted comment with id ${req.params.commentid}`)
-  })
+      res.send(`Deleted comment with id ${req.params.commentid}`)
+    })
 }
