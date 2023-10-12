@@ -4,7 +4,13 @@ const jwt = require('jsonwebtoken')
 const { verifyToken } = require('../utils/authentication')
 
 exports.getAllPosts = (req, res, next) => {
-  Post.find().exec((err, listPosts) => {
+  const query = {}
+
+  if (Boolean(req.query.published) === true) {
+    query.published = true
+  }
+
+  Post.find(query).exec((err, listPosts) => {
     if (err) {
       return next(err)
     }
