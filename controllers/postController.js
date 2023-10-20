@@ -10,13 +10,15 @@ exports.getAllPosts = (req, res, next) => {
     query.published = true
   }
 
-  Post.find(query).exec((err, listPosts) => {
-    if (err) {
-      return next(err)
-    }
+  Post.find(query)
+    .populate('author')
+    .exec((err, listPosts) => {
+      if (err) {
+        return next(err)
+      }
 
-    res.send(listPosts)
-  })
+      res.send(listPosts)
+    })
 }
 
 exports.getPost = (req, res, next) => {
