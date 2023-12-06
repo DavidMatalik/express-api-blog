@@ -41,7 +41,7 @@ exports.createNewComment = [
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-      return res.send(new Error(errors.array()))
+      return res.status(400).json({ errors: errors.array() })
     }
 
     Post.findById(req.params.postid).exec((err, post) => {
